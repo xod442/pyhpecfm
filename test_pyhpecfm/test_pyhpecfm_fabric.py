@@ -265,3 +265,21 @@ class TestPerformFit(TestCase):
         my_fabric = all_fabrics[0]['uuid']
         fit = fabric.perform_fit(cfm, my_fabric, "Test Fit", "My Test Fit from Python Library")
         self.assertEqual(str(fit), '<Response [200]>')
+
+class TestAddVlanGroups(TestCase):
+    """
+    Test
+    case for pyhpecfm.fabric add vlan group function
+    """
+
+    @vcr.use_cassette(cassette_library_dir='./test_pyhpecfm/fixtures/cassettes')
+    def test_add_vlan_groups(self):
+        """
+        General test for pyhpecfm.fabric.add_vlan_groups function
+
+        cfm.connect()
+        all_fabrics = fabric.get_fabrics(cfm)
+        my_fabric = all_fabrics[0]['uuid']
+        fit = fabric.perform_fit(cfm, my_fabric, "Test Fit", "My Test Fit from Python Library")
+        self.assertEqual(str(fit), '<Response [200]>')
+        """

@@ -234,7 +234,22 @@ def get_vlan_groups(cfmclient, params=None):
     """
     return cfmclient.get('v1/vlan_groups', params).json().get('result')
 
-# TODO POST VLAN_GROUP FUNCTION
+def add_vlan_groups(cfmclient, name, description, vlans):
+    """
+    Add vlan(s) to the controller.
+    :param cfmclient: CFM Client object
+    :param name: Simple name of the fit
+    :param description: Longer Description of the fitting request
+    :param vlans: One or more vlans to add to the vlan group
+    :return:
+    """
+    data = {
+        'name': '{}'.format(name),
+        'description': '{}'.format(description),
+        'vlans': '{}'.format(vlans)
+    }
+    path = 'v1/vlan_groups'
+    return cfmclient.post(path, data=data)
 
 # TODO PUT VLAN GROUP FUNCTION
 
