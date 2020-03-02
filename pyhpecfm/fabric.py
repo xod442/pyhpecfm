@@ -173,6 +173,53 @@ def get_lags(cfmclient, params=None):
     """
     return cfmclient.get('v1/lags', params).json().get('result')
 
+def add_lags(cfmclient, name, description, vlan_uuid, a_port_uuid, b_port_uuid, speed):
+    """
+    Add vlan(s) to the controller.
+    :param cfmclient: CFM Client object
+    :param name: Simple name of the fit
+    :param description: Longer Description of the fitting request
+    :param vlan_uuid: A vlan or vlan group
+    :param a_port_uuid: uuid of the a_side port
+    :param b_port_uuid: uuid of the b_side port
+    :param speed: Port speed
+    :return:
+    """
+        data = {
+            "native_vlan":0,
+            "description": "{}".format(description),
+            "vlan_group_uuids":[
+                "{}".format(vlan_uuid)
+            ],
+            "port_properties":[
+                {
+                "lacp":{
+                "priority":100,
+                "intervals":{
+                   "slow":30,
+                   "fast":1
+                },
+                "aggregate_port_limits":{
+                   "minimum":2,
+                   "maximum":8
+                },
+                "mode":"active"
+             },
+             "speed":{
+                "current": "{}".format(speed)
+             },
+             "port_uuids":[
+                "{}".format(a_port_uuid),
+                "{}".format(b_port_uuid)
+             ]
+          }
+       ],
+       "ungrouped_vlans":"",
+       "name": "{}".format(name)
+    }
+    path = 'v1/lags'
+    return cfmclient.post(path, data=data)
+
 
 ##################
 # Port functions #
